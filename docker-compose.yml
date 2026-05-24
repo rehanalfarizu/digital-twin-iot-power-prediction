@@ -1,0 +1,41 @@
+# Digital Twin IoT Power Prediction - Docker Configuration
+
+services:
+  # Main Digital Twin Dashboard
+  streamlit-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_HEADLESS=true
+    restart: unless-stopped
+    networks:
+      - digital-twin-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: ML Model API Service
+  ml-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.ml-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+    restart: unless-stopped
+    networks:
+      - digital-twin-network
+
+networks:
+  digital-twin-network:
+    driver: bridge

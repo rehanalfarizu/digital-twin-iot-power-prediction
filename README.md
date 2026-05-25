@@ -37,7 +37,7 @@ pip install -r requirements.txt
 ### 2. Jalankan Streamlit Dashboard
 
 ```bash
-streamlit run streamlit_web.py
+[streamlit run streamlit_web.py](https://digital-twin-iot-power-prediction-hxapbneictz5wewj3fmujr.streamlit.app/)
 ```
 
 Buka browser di `http://localhost:8501`

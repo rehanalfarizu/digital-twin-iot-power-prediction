@@ -6,6 +6,10 @@ Proyek data mining untuk prediksi konsumsi daya listrik berbasis Digital Twin me
 
 Proyek ini mengimplementasikan Digital Twin untuk prediksi konsumsi daya listrik berdasarkan data sensor IoT menggunakan metode regresi.
 
+## Live Demo
+
+Aplikasi Streamlit tersedia secara publik di Streamlit Cloud.
+
 ## Dataset
 
 - **Source:** IoT Gateway (Raspberry Pi)
@@ -14,11 +18,13 @@ Proyek ini mengimplementasikan Digital Twin untuk prediksi konsumsi daya listrik
 - **Features:** Suhu, Kelembaban, Tegangan, Arus
 - **Target:** Prediksi Daya (Watt)
 
-## Live Demo
+## Notebook & Colab
 
-Aplikasi Streamlit tersedia secara publik di:
+Buka notebook langsung di Google Colab:
 
-**[Streamlit Cloud App](https://your-app-name.streamlit.app)**
+| File | Link |
+| ---- | ---- |
+| **Digital Twin Analysis** | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rehanalfarizu/digital-twin-iot-power-prediction/blob/main/Digital_Twin_IoT_Power_Prediction.ipynb) |
 
 ## Instalasi
 
@@ -47,16 +53,6 @@ Buka browser di `http://localhost:8501`
 5. Set main file path ke `streamlit_web.py`
 6. Klik **Deploy!**
 
-### Docker (Optional)
-
-```bash
-# Build image
-docker build -t digital-twin .
-
-# Run container
-docker run -p 8501:8501 digital-twin
-```
-
 ## Struktur File
 
 ```
@@ -72,10 +68,10 @@ digital-twin-iot-power-prediction/
 
 ## Model yang Digunakan
 
-| Model | RMSE (W) | R² Score |
-|-------|----------|----------|
-| **Linear Regression** | 0.61 | 93.41% |
-| Random Forest | 0.73 | 90.48% |
-| XGBoost | 1.43 | 63.37% |
+| Model                | RMSE (W) | R² Score |
+| -------------------- | -------- | -------- |
+| **Linear Regression** | 0.61     | 93.41%   |
+| Random Forest        | 0.73     | 90.48%   |
+| XGBoost              | 1.43     | 63.37%   |
 
 > **Best Model:** Linear Regression - karena korelasi Tegangan-Daya sangat tinggi (r = 0.934), sesuai dengan Hukum Ohm P = V × I

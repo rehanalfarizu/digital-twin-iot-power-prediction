@@ -10,7 +10,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
 import warnings
+import joblib
+import os
+
 warnings.filterwarnings('ignore')
+
+# Load trained model
+@st.cache_resource
+def load_model():
+    if os.path.exists('lr.pkl'):
+        return joblib.load('lr.pkl')
+    return None
+
+lr_model = load_model()
 
 # ============================================================================
 # PAGE CONFIGURATION
@@ -340,15 +352,15 @@ with st.sidebar:
         <h4>Linear Regression</h4>
         <div class="model-best-row">
             <span class="model-best-label">RMSE</span>
-            <span class="model-best-value">0.6086 W</span>
+            <span class="model-best-value">1.7442 W</span>
         </div>
         <div class="model-best-row">
             <span class="model-best-label">MAE</span>
-            <span class="model-best-value">0.5086 W</span>
+            <span class="model-best-value">1.2107 W</span>
         </div>
         <div class="model-best-row">
             <span class="model-best-label">R² Score</span>
-            <span class="model-best-value">93.41%</span>
+            <span class="model-best-value">93.42%</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -404,8 +416,14 @@ with col_right:
     st.markdown("### 🔮 Prediksi Konsumsi Daya")
     st.markdown("Hasil prediksi menggunakan model terbaik:")
 
-    # Calculate prediction
-    prediction = tegangan * arus * 0.85 + (suhu - 25) * 0.1
+    # ML Model prediction
+    if lr_model is not None:
+        features = np.array([[tegangan, arus, suhu, kelembaban]])
+        prediction = lr_model.predict(features)[0]
+    else:
+        # Fallback formula
+        prediction = tegangan * arus * 0.85 + (suhu - 25) * 0.1
+
     apparent_power = tegangan * arus
     power_factor = prediction / apparent_power if apparent_power > 0 else 0.85
 
@@ -441,9 +459,9 @@ with col1:
 
     model_data = {
         'Model': ['Linear Regression ✓', 'Random Forest', 'XGBoost'],
-        'RMSE (W)': ['0.6086', '0.7313', '1.4344'],
-        'MAE (W)': ['0.5086', '0.4704', '0.8441'],
-        'R² Score': ['93.41%', '90.48%', '63.37%']
+        'RMSE (W)': ['1.7442', '0.7313', '1.4344'],
+        'MAE (W)': ['1.2107', '0.4704', '0.8441'],
+        'R² Score': ['93.42%', '90.48%', '63.37%']
     }
     st.dataframe(pd.DataFrame(model_data), hide_index=True)
 
@@ -465,8 +483,8 @@ with col2:
     fig, axes = plt.subplots(1, 2, figsize=(13, 5))
 
     models = ['Linear\nRegression', 'Random\nForest', 'XGBoost']
-    rmse_values = [0.6086, 0.7313, 1.4344]
-    r2_values = [0.9341, 0.9048, 0.6337]
+    rmse_values = [1.7442, 0.7313, 1.4344]
+    r2_values = [0.9342, 0.9048, 0.6337]
 
     # Colors - professional blue/green scheme
     colors_rmse = ['#059669', '#f59e0b', '#ef4444']

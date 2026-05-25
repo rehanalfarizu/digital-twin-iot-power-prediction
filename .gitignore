@@ -225,3 +225,15 @@ CLAUDE.md
 
 # Temporary files
 ~$*.xlsx
+
+# Model training scripts
+train_lr_model.py
+
+# Local dataset (large)
+*.xlsx
+
+# Image files
+*.png
+
+# XGBoost model (large, use lr.pkl instead)
+xgboost_*.joblib

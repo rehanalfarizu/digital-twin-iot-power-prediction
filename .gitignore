@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Claude Code
+CLAUDE.md
+
+# PDF files (exclude from repo)
+*.pdf
+
+# Temporary files
+~$*.xlsx
